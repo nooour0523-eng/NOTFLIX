@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NOTFLIX</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #141414;
+      color: white;
+    }
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background-color: #000;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      z-index: 10;
+    }
+    .navbar h1 {
+      margin: 0;
+      font-size: 1.5rem;
+      color: red;
+    }
+
+    /* 디스플레이 애니메이션 */
+    .display {
+      margin-top: 60px;
+      padding: 0 20px;
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      height: 540px;
+      transform: translateY(30px) scale(0.98);
+      transition: max-height 0.6s ease, opacity 0.4s ease, transform 0.6s ease;
+    }
+    .display.active {
+      max-height: 700px;
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    /* 카드 나열 */
+    .card-container {
+      margin-top: 0px;
+      overflow-x: auto;
+      white-space: nowrap;
+      padding: 0 20px;
+    }
+    .card {
+      display: inline-block;
+      width: 200px;
+      height: 120px;
+      margin-right: 10px;
+      background-color: #555;
+      border-radius: 8px;
+      cursor: pointer;
+      background-size: cover;
+      background-position: center;
+      transition: transform 0.3s ease;
+    }
+    .card:hover {
+      transform: scale(1.05);
+    }
+
+    /* 소개 레이아웃 */
+    .intro-layout {
+      display: flex;
+      background-color: #181818;
+      height: 540px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+    }
+    .intro-video {
+      position: relative;
+      flex: 2;
+      background-color: black;
+      overflow: hidden;
+    }
+    .intro-video img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.05);
+      transition: transform 1s ease;
+    }
+    .intro-layout.show img {
+      transform: scale(1);
+    }
+    .overlay {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      opacity: 0;
+      transform: translateY(15px);
+      transition: opacity 0.5s ease 0.3s, transform 0.5s ease 0.3s;
+    }
+    .intro-layout.show .overlay {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .title {
+      font-size: 2.5rem;
+      font-weight: 850;
+      margin: 0 0 0px;
+    }
+    .subtitle {
+      font-size: 1rem;
+      font-weight:650;
+      margin: 0 0 5px;
+    }
+    .buttons button {
+      margin-right: 10px;
+      padding: 8px 14px;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    .play-btn {
+      background-color: white;
+      color: black;
+    }
+    .info-btn {
+      background-color: rgba(255, 255, 255, 0.2);
+      color: white;
+    }
+    .intro-info {
+      flex: 1;
+      padding: 0px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .description {
+      font-size: 1rem;
+      line-height: 1.4;
+      margin-bottom: 25px;
+      color: lightgrey;
+    }
+    .meta {
+      font-size: 0.9rem;
+      color: grey;
+      text-shadow: 0 0 10px rgba(0,0,0,0.7);
+    }
+    .hashtag {
+      font-size: 0.9rem;
+      color: white;
+      font-weight: 600;
+      text-shadow: 0 0 10px rgba(0,0,0,0.7);
+      margin: 0 0 5px;
+    }
+    .rating {
+      background-color: red;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: bold;
+      color: white;
+    }
+    .base {
+      font-size: 1rem;
+      color: grey;
+      font-weight: 400;
+      padding: 50 50 50px;
+    }
+  </style>
+</head>
+<body>
+  <!-- 네비게이션 -->
+  <div class="navbar">
+    <h1>NOTFLIX</h1>
+  </div>
+
+  <!-- 디스플레이 -->
+  <div class="display" id="display" style="height: 540px;"></div>
+
+  <!-- 카드 나열 -->
+  <div class="card-container">
+    <h2 class='base' style='margin-left: 20;'>홀란드 시리즈</h2>
+    <div
+        class="card"
+        data-video="/video/VOD003.mp4"
+        data-image="preview/VOD003.png"
+         data-title="홀란드 <span style='color: #C1232C;'>크리드</span>"
+        data-subtitle="홀란드 V"
+        data-description="희대의 싸움군 심영, 결국 고자가 되고 말았지만, <br>그러나 이 때 한 남자가 나타나는데... <br>온 가족이 즐기는 액션 활극!"
+        data-hashtag="#정치사극 #액션 #이재명배우 #심영 #고자 #의료드라마"
+        data-rating="18+"
+        data-year="2025"
+        data-genre="판타지, 느와르, 코미디, 다큐멘터리, 역사극"
+        style="background-image: url('cards/VOD003.png')"
+    ></div>
+    <div
+        class="card"
+        data-video="/video/VOD001.mp4"
+        data-image="preview/VOD001.png"
+        data-title="홀란드 III"
+        data-subtitle="이집트로의 여행"
+        data-description="2016년 고대 이집트의 번성한 도시 서울,<br>파라오 클레오팍트라와 재메이햄 62세의 엇갈린 운명에<br>상상치도 못한 인물이 왕좌를 차지한다!"
+        data-hashtag="#정치사극 #액션 #이재명배우 #고대이집트 #클레오파트라 #어쌔신크리드오리진"
+        data-rating="18+"
+        data-year="2025"
+        data-genre="판타지, 느와르, 코미디, 다큐멘터리, 역사극"
+        style="background-image: url('cards/VOD001.png')"
+    ></div>
+    <div
+        class="card"
+        data-video="/video/VOD002.mp4"
+        data-image="preview/VOD002.png"
+        data-title="홀란드 II"
+        data-subtitle=""
+        data-description="서울의 어느 겨울날, 비상계엄이 선포되고 거대한 운석열이 대한민국의 하늘 위로 드리운다.<br>바로 그 순간, 왕좌에 오르고픈 한 남자가 나타나는데..."
+        data-hashtag="#정치사극 #액션 #이재명배우 #윤석열배우 #계엄영화 #어쌔신크리드유니티"
+        data-rating="18+"
+        data-year="2025"
+        data-genre="판타지, 느와르, 코미디, 다큐멘터리, 역사극, 액션 어드벤쳐"
+        style="background-image: url('cards/VOD002.png')"
+    ></div>
+   </div>
+<div class="card-container">
+    <h2 class='base' style='margin-left: 20;'>NOTFLIX 오리지널</h2>
+    <div
+        class="card"
+        data-video="/video/VOD006.mp4"
+        data-image="preview/VOD006.png"
+        data-title="위대한 강의"
+        data-subtitle="존 체어 교수편"
+        data-description='"왜 의자는 땅에 붙어 있을까?" <br> 사소한 질문에서 시작되는 우주 물리학의 신비로운 세계, <br> PD 대학교 물리학 교수 존 체어(John Chair)의 위대한 강의를 지금 만나보세요.'
+        data-hashtag="#물리학 #중력 #위대한강의 #존체어 #의자"
+        data-rating="15+"
+        data-year="2012"
+        data-genre="다큐멘터리"
+        style="background-image: url('cards/VOD006.png')"
+    ></div>
+    <div
+        class="card"
+        data-video="/video/VOD008.mp4"
+        data-image="preview/VOD008.png"
+        data-title="주문"
+        data-subtitle=""
+        data-description='"주문, 피 청구인 대통령 윤석열을 파면한다." <br> 마법사 문형배의 마지막 주문이 시작된다!'
+        data-hashtag="#판타지 #마법물 #마법사 #정치 #휴먼다큐"
+        data-rating="18+"
+        data-year="2025"
+        data-genre="판타지, 액션, 마법, 법정드라마"
+        style="background-image: url('cards/VOD008.png')"
+    ></div>
+    <div
+        class="card"
+        data-video="/video/VOD007.mp4"
+        data-image="preview/VOD007.png"
+         data-title="<h1 style='font-size: 1rem; font-weight: 450; margin-bottom: 0px;'>롯데리아에 간</h1>"
+        data-subtitle="<h1 style='font-size: 2.5rem; font-weight: 850;'>부승찬<h1>"
+        data-description='국회의원이자 한 사람의 제자로. <br> 롯데리아가 먹고 싶던 국회의원 부승찬... <br> 그리고 그의 대선배이자 인생 스승의 인생의 큰 가르침!'
+        data-hashtag="#휴먼다큐"
+        data-rating="18+"
+        data-year="2024"
+        data-genre="다큐멘터리"
+        style="background-image: url('cards/VOD007.png')"
+    ></div>
+    <div
+        class="card"
+        data-video="/video/VOD004.mp4"
+        data-image="preview/VOD004.png"
+        data-title="베이스 탑제!"
+        data-subtitle="<br>"
+        data-description="월드투어 전 날, 베이스가 사라졌다? <br> 인기 절정의 인기 밴드 「고등어」, 그러나 어느날 베이시스트가 잠적하는데... <br> 천안으로 떠난 베이시스트를 찾기 위한 좌충우돌 로맨스가 시작된다!"
+        data-hashtag="#밴드 #버스킹 #멜로"
+        data-rating="15+"
+        data-year="2025"
+        data-genre="코미디, 뮤지컬, 로맨스, 액션"
+        style="background-image: url('cards/VOD004.png')"
+    ></div>
+    <div
+        class="card"
+        data-video="/video/VOD005.mp4"
+        data-image="preview/VOD005.png"
+        data-title="온리팬스 시 미"
+        data-subtitle="<br>"
+        data-description='"날 기억해 줘..." <br> 지구 위기의 순간... 등장한 거대 로봇! <br> 그 순간 온리팬스의 유쾌한 반란이 시작된다!'
+        data-hashtag="#액션 #메카닉 #거대로봇 #아포칼립스 #코미디"
+        data-rating="12+"
+        data-year="2077"
+        data-genre="액션"
+        style="background-image: url('cards/VOD005.png')"
+    ></div>
+   </div>
+<div class="card-container">
+    <h2 class='base' style='margin-left: 20;'>치지직 다시보기</h2>
+    <div
+        class="card"
+        data-video="/video/VOD009.mp4"
+        data-image="preview/VOD009.png"
+        data-title="어쌔신 크리드 섀도우스"
+        data-subtitle="Assassin's Creed Shadows"
+        data-description='문제의 흑인 사무라이 게임'
+        data-hashtag="#어쌔신크리드 #PC #유비소프트 #흑인 #일본 #닌자 #암살"
+        data-rating="18+"
+        data-year="2025"
+        data-genre="액션 어드벤쳐, 잠입, 암살, RPG"
+        style="background-image: url('cards/VOD009.png')"
+    ></div>
+   </div>
+
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+  const cards = document.querySelectorAll('.card');
+  const display = document.getElementById('display');
+
+  cards.forEach(card => {
+    card.addEventListener('click', () => {
+      const video = card.dataset.video;
+      const image = card.dataset.image;
+      const title = card.dataset.title;
+      const subtitle = card.dataset.subtitle;
+      const description = card.dataset.description;
+      const hashtag = card.dataset.hashtag;
+      const rating = card.dataset.rating;
+      const year = card.dataset.year;
+      const genre = card.dataset.genre;
+
+      display.innerHTML = `
+        <div class="intro-layout">
+          <div class="intro-video">
+            <img src='${image}'/>
+            <div class="overlay">
+              <h1 class="title">${title}</h1>
+              <h3 class="subtitle">${subtitle}</h3>
+              <div class="intro-info">
+                <p class="description">${description}</p>
+                <p class="meta">
+                  <span class="hashtag">${hashtag}</span><br><br>
+                  <span class="rating">${rating}</span> · <span class="year">${year}</span> · <span class="genre">${genre}</span>
+                </p>
+              </div>
+              <div class="buttons">
+                <button class="play-btn" onclick="location.href='player.html?video=${encodeURIComponent(video)}'">▶ 재생</button>
+                <button class="info-btn">상세 정보</button><br>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      display.classList.add('active');
+      requestAnimationFrame(() => {
+        const intro = display.querySelector('.intro-layout');
+        intro.classList.add('show');
+      });
+    });
+  });
+});
+
+</script>
+</body>
+</html>

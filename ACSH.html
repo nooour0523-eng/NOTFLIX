@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NOTFLIX</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #141414;
+      color: white;
+    }
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background-color: #000;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      z-index: 10;
+    }
+    .navbar h1 {
+      margin: 0;
+      font-size: 1.5rem;
+      color: red;
+    }
+
+    /* 디스플레이 애니메이션 */
+     #btnBack {
+    background: transparent;
+    border: 10px;
+    color: #e50914;
+    font-weight: 700;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 100px 0 0px 50px;
+    align-self: flex-start;
+    }
+    .display {
+      margin-top: 60px;
+      padding: 0 20px;
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      height: 540px;
+      transform: translateY(30px) scale(0.98);
+      transition: max-height 0.6s ease, opacity 0.4s ease, transform 0.6s ease;
+    }
+    .display.active {
+      max-height: 700px;
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    /* 카드 나열 */
+    .card-container {
+      margin-top: 0px;
+      overflow-x: auto;
+      white-space: nowrap;
+      padding: 0 20px;
+    }
+    .card {
+      display: inline-block;
+      width: 200px;
+      height: 120px;
+      margin-right: 10px;
+      background-color: #555;
+      border-radius: 8px;
+      cursor: pointer;
+      background-size: cover;
+      background-position: center;
+      transition: transform 0.3s ease;
+    }
+    .card:hover {
+      transform: scale(1.05);
+    }
+
+    /* 소개 레이아웃 */
+    .intro-layout {
+      display: flex;
+      background-color: #181818;
+      height: 540px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+    }
+    .intro-video {
+      position: relative;
+      flex: 2;
+      background-color: black;
+      overflow: hidden;
+    }
+    .intro-video img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.05);
+      transition: transform 1s ease;
+    }
+    .intro-layout.show img {
+      transform: scale(1);
+    }
+    .overlay {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      opacity: 0;
+      transform: translateY(15px);
+      transition: opacity 0.5s ease 0.3s, transform 0.5s ease 0.3s;
+    }
+    .intro-layout.show .overlay {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .title {
+      font-size: 2.5rem;
+      font-weight: 850;
+      margin: 0 0 0px;
+    }
+    .subtitle {
+      font-size: 1rem;
+      font-weight:650;
+      margin: 0 0 5px;
+    }
+    .buttons button {
+      margin-right: 10px;
+      padding: 8px 14px;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    .play-btn {
+      background-color: white;
+      color: black;
+    }
+    .info-btn {
+      background-color: rgba(255, 255, 255, 0.2);
+      color: white;
+    }
+    .intro-info {
+      flex: 1;
+      padding: 0px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .description {
+      font-size: 1rem;
+      line-height: 1.4;
+      margin-bottom: 25px;
+      color: lightgrey;
+    }
+    .meta {
+      font-size: 0.9rem;
+      color: grey;
+      text-shadow: 0 0 10px rgba(0,0,0,0.7);
+    }
+    .hashtag {
+      font-size: 0.9rem;
+      color: white;
+      font-weight: 600;
+      text-shadow: 0 0 10px rgba(0,0,0,0.7);
+      margin: 0 0 5px;
+    }
+    .rating {
+      background-color: red;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: bold;
+      color: white;
+    }
+    .base {
+      font-size: 1rem;
+      color: grey;
+      font-weight: 400;
+      padding: 50 50 50px;
+    }
+  </style>
+</head>
+<body>
+  <!-- 네비게이션 -->
+  <div class="navbar">
+    <h1>NOTFLIX</h1>
+  </div>
+  
+  <button id="btnBack">← 돌아가기</button>
+
+  <!-- 디스플레이 -->
+  <div class="display" id="display" style="height: 540px;"></div>
+
+  <!-- 카드 나열 -->
+  <div class="card-container">
+    <h2 class='base' style='margin-left: 20;'>시즌1</h2>
+    <div
+        class="card"
+        data-type="movie"
+        data-video="/video/VOD010.mp4"
+        data-image="preview/VOD010.png"
+        data-title="에피소드 1"
+        data-subtitle=""
+        data-description="개억까미친게임"
+        data-hashtag=""
+        data-rating=""
+        data-year=""
+        data-genre=""
+        style="background-image: url('cards/VOD010.png')"
+    ></div>
+   </div>
+
+
+  <script>
+    const btnBack = document.getElementById('btnBack');
+  document.addEventListener('DOMContentLoaded', () => {
+  const cards = document.querySelectorAll('.card');
+  const display = document.getElementById('display');
+    btnBack.addEventListener('click', () => {
+    history.back();
+  });
+
+  cards.forEach(card => {
+    card.addEventListener('click', () => {
+      const type = card.dataset.type;
+      const video = card.dataset.video;
+      const image = card.dataset.image;
+      const title = card.dataset.title;
+      const subtitle = card.dataset.subtitle;
+      const description = card.dataset.description;
+      const hashtag = card.dataset.hashtag;
+      const rating = card.dataset.rating;
+      const year = card.dataset.year;
+      const genre = card.dataset.genre;
+
+    if (type == "acsh") {
+        display.innerHTML = `
+        <div class="intro-layout">
+          <div class="intro-video">
+            <img src='${image}'/>
+            <div class="overlay">
+              <h1 class="title">${title}</h1>
+              <h3 class="subtitle">${subtitle}</h3>
+              <div class="intro-info">
+                <p class="description">${description}</p>
+              </div>
+              <div class="buttons">
+                <button class="play-btn" onclick="location.href='ACSH.html'">▶ 에피소드 보기</button>
+                <button class="info-btn">상세 정보</button><br>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+    else if (type == "movie") {
+      display.innerHTML = `
+        <div class="intro-layout">
+          <div class="intro-video">
+            <img src='${image}'/>
+            <div class="overlay">
+              <h1 class="title">${title}</h1>
+              <h3 class="subtitle">${subtitle}</h3>
+              <div class="intro-info">
+                <p class="description">${description}</p>
+              </div>
+              <div class="buttons">
+                <button class="play-btn" onclick="location.href='player.html?video=${encodeURIComponent(video)}'">▶ 재생</button>
+                <button class="info-btn">상세 정보</button><br>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    } else {
+        display.innerHTML = `
+        <div class="intro-layout">
+          <div class="intro-video">
+            <img src='${image}'/>
+            <div class="overlay">
+              <h1 class="title">${title}</h1>
+              <h3 class="subtitle">${subtitle}</h3>
+              <div class="intro-info">
+                <p class="description">${description}</p>
+                <p class="meta">
+                  <span class="hashtag">${hashtag}</span><br><br>
+                  <span class="rating">${rating}</span> · <span class="year">${year}</span> · <span class="genre">${genre}</span>
+                </p>
+              </div>
+              <div class="buttons">
+                <button class="info-btn">미출시</button>
+                <button class="info-btn">상세 정보</button><br>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+      display.classList.add('active');
+      requestAnimationFrame(() => {
+        const intro = display.querySelector('.intro-layout');
+        intro.classList.add('show');
+      });
+    });
+  });
+});
+
+</script>
+</body>
+</html>
