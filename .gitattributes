@@ -1,0 +1,8 @@
+video/VOD001.mp4 filter=lfs diff=lfs merge=lfs -text
+video/VOD002.mp4 filter=lfs diff=lfs merge=lfs -text
+video/VOD003.mp4 filter=lfs diff=lfs merge=lfs -text
+video/VOD004.mp4 filter=lfs diff=lfs merge=lfs -text
+video/VOD005.mp4 filter=lfs diff=lfs merge=lfs -text
+video/VOD006.mp4 filter=lfs diff=lfs merge=lfs -text
+video/VOD007.mp4 filter=lfs diff=lfs merge=lfs -text
+*.mp4 filter=lfs diff=lfs merge=lfs -text
