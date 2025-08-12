@@ -186,7 +186,7 @@
     <h2 class='base' style='margin-left: 20;'>NOTFLIX 오리지널</h2>
     <div
         class="card"
-        data-type="VOD006"
+        data-type="VOD6"
         data-video="/video/VOD006.mp4"
         data-image="preview/VOD006.png"
         data-title="위대한 강의"
@@ -255,11 +255,11 @@
         style="background-image: url('cards/VOD005.png')"
     ></div>
    </div>
-  <div class="card-container">
+<div class="card-container">
     <h2 class='base' style='margin-left: 20;'>홀란드 시리즈</h2>
     <div
         class="card"
-        data-type="VOD003"
+        data-type="VOD3"
         data-video="/video/VOD003.mp4"
         data-image="preview/VOD003.png"
         data-title="홀란드 <span style='color: #C1232C;'>크리드</span>"
@@ -273,7 +273,7 @@
     ></div>
     <div
         class="card"
-        data-type="VOD001"
+        data-type="VOD1"
         data-video="/video/VOD001.mp4"
         data-image="preview/VOD001.png"
         data-title="홀란드 III"
@@ -287,7 +287,7 @@
     ></div>
     <div
         class="card"
-        data-type="VOD002"
+        data-type="VOD2"
         data-video="/video/VOD002.mp4"
         data-image="preview/VOD002.png"
         data-title="홀란드 II"
@@ -361,7 +361,30 @@
         </div>
       `;
     }
-    else if (type == "VOD002") {
+    else if (type == "VOD1") {
+        display.innerHTML = `
+        <div class="intro-layout">
+          <div class="intro-video">
+            <img src='${image}'/>
+            <div class="overlay">
+              <h1 class="title">${title}</h1>
+              <h3 class="subtitle">${subtitle}</h3>
+              <div class="intro-info">
+                <p class="description">${description}</p>
+                <p class="meta">
+                  <span class="hashtag">${hashtag}</span><br><br>
+                  <span class="rating">${rating}</span> · <span class="year">${year}</span> · <span class="genre">${genre}</span>
+                </p>
+              </div>
+              <div class="buttons">
+                <button class="play-btn" onclick="location.href='VOD001.html'">▶ 재생</button>
+                <button class="info-btn">상세 정보</button><br>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    } else if (type == "VOD2") {
         display.innerHTML = `
         <div class="intro-layout">
           <div class="intro-video">
@@ -385,31 +408,7 @@
         </div>
       `;
     }
-    else else if (type == "VOD001") {
-        display.innerHTML = `
-        <div class="intro-layout">
-          <div class="intro-video">
-            <img src='${image}'/>
-            <div class="overlay">
-              <h1 class="title">${title}</h1>
-              <h3 class="subtitle">${subtitle}</h3>
-              <div class="intro-info">
-                <p class="description">${description}</p>
-                <p class="meta">
-                  <span class="hashtag">${hashtag}</span><br><br>
-                  <span class="rating">${rating}</span> · <span class="year">${year}</span> · <span class="genre">${genre}</span>
-                </p>
-              </div>
-              <div class="buttons">
-                <button class="play-btn" onclick="location.href='VOD001.html'">▶ 재생</button>
-                <button class="info-btn">상세 정보</button><br>
-              </div>
-            </div>
-          </div>
-        </div>
-      `;
-    }
-    else if (type == "VOD003") {
+    else if (type == "VOD3") {
         display.innerHTML = `
         <div class="intro-layout">
           <div class="intro-video">
@@ -433,7 +432,7 @@
         </div>
       `;
     }
-    else if (type == "VOD006") {
+    else if (type == "VOD6") {
         display.innerHTML = `
         <div class="intro-layout">
           <div class="intro-video">
