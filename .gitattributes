@@ -6,3 +6,4 @@ video/VOD005.mp4 filter=lfs diff=lfs merge=lfs -text
 video/VOD006.mp4 filter=lfs diff=lfs merge=lfs -text
 video/VOD007.mp4 filter=lfs diff=lfs merge=lfs -text
 *.mp4 filter=lfs diff=lfs merge=lfs -text
+Player/video/VOD007.mp4 filter=lfs diff=lfs merge=lfs -text
