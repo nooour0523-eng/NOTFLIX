@@ -313,6 +313,20 @@
    </div>
 <div class="card-container">
     <h2 class='base' style='margin-left: 20;'>홀란드 시리즈</h2>
+      <div
+        class="card"
+        data-type="VOD11"
+        data-video="/video/VOD011.mp4"
+        data-image="preview/VOD011.png"
+        data-title="홀란드 <span style='color: #C1232C;'>크리드 III</span>"
+        data-subtitle="홀란드 VI"
+        data-description="대 재앙이 펼쳐진 지구... <br>오직 PVP만이 지구를 구한다."
+        data-hashtag="#착한사과 #액션 #레이싱 #제임스본드 #재난영화 #어쌔신크리드3 #민초루나"
+        data-rating="18+"
+        data-year="2026"
+        data-genre="판타지, 느와르, 코미디, 다큐멘터리, 역사극"
+        style="background-image: url('cards/VOD011.png')"
+    ></div>
     <div
         class="card"
         data-type="VOD3"
@@ -510,8 +524,30 @@
           </div>
         </div>
       `;
-    }
-    else if (type == "movie") {
+    } else if (type == "VOD11") {
+        display.innerHTML = `
+        <div class="intro-layout">
+          <div class="intro-video">
+            <img src='${image}'/>
+            <div class="overlay">
+              <h1 class="title">${title}</h1>
+              <h3 class="subtitle">${subtitle}</h3>
+              <div class="intro-info">
+                <p class="description">${description}</p>
+                <p class="meta">
+                  <span class="hashtag">${hashtag}</span><br><br>
+                  <span class="rating">${rating}</span> · <span class="year">${year}</span> · <span class="genre">${genre}</span>
+                </p>
+              </div>
+              <div class="buttons">
+                <button class="play-btn" onclick="location.href='VOD011.html'">▶ 예고편 보기</button>
+                <button class="info-btn">상세 정보</button><br>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    } else if (type == "movie") {
       display.innerHTML = `
         <div class="intro-layout">
           <div class="intro-video">
