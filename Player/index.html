@@ -313,6 +313,20 @@
    </div>
 <div class="card-container">
     <h2 class='base' style='margin-left: 20;'>홀란드 시리즈</h2>
+        <div
+        class="card"
+        data-type="VOD12"
+        data-video="/video/VOD012.mp4"
+        data-image="preview/VOD012.png"
+        data-title="홀란드"
+        data-subtitle="HOLAND"
+        data-description="인류가 초대한 거대한 재앙이 펼쳐졌고, 국가의 땅 절반이 사라졌다. <br> 이 틈을 타 무도한 권력자 런정민이 천안을 점령하는데... <br> 과연 정의의 사도는 천안을 악으로부터 사수할 수 있을것인가?"
+        data-hashtag="#홀란드리부트 #홀란드2077 #액션영화 #천안 #어쌔신크리드유니티 #런정민"
+        data-rating="18+"
+        data-year="2077"
+        data-genre="액션, 느와르, 판타지, 코미디, 역사극"
+        style="background-image: url('cards/VOD012.png')"
+    ></div>
       <div
         class="card"
         data-type="VOD11"
@@ -541,6 +555,29 @@
               </div>
               <div class="buttons">
                 <button class="play-btn" onclick="location.href='VOD011.html'">▶ 예고편 보기</button>
+                <button class="info-btn">상세 정보</button><br>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    } else if (type == "VOD12") {
+        display.innerHTML = `
+        <div class="intro-layout">
+          <div class="intro-video">
+            <img src='${image}'/>
+            <div class="overlay">
+              <h1 class="title">${title}</h1>
+              <h3 class="subtitle">${subtitle}</h3>
+              <div class="intro-info">
+                <p class="description">${description}</p>
+                <p class="meta">
+                  <span class="hashtag">${hashtag}</span><br><br>
+                  <span class="rating">${rating}</span> · <span class="year">${year}</span> · <span class="genre">${genre}</span>
+                </p>
+              </div>
+              <div class="buttons">
+                <button class="play-btn" onclick="location.href='VOD012.html'">▶ 보기</button>
                 <button class="info-btn">상세 정보</button><br>
               </div>
             </div>
