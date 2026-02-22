@@ -598,7 +598,30 @@
           </div>
         </div>
       `;
-    } else if (type == "movie") {
+    } else if (type == "VOD13") {
+        display.innerHTML = `
+        <div class="intro-layout">
+          <div class="intro-video">
+            <img src='${image}'/>
+            <div class="overlay">
+              <h1 class="title">${title}</h1>
+              <h3 class="subtitle">${subtitle}</h3>
+              <div class="intro-info">
+                <p class="description">${description}</p>
+                <p class="meta">
+                  <span class="hashtag">${hashtag}</span><br><br>
+                  <span class="rating">${rating}</span> · <span class="year">${year}</span> · <span class="genre">${genre}</span>
+                </p>
+              </div>
+              <div class="buttons">
+                <button class="play-btn" onclick="location.href='VOD013.html'">▶ 보기</button>
+                <button class="info-btn">상세 정보</button><br>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }else if (type == "movie") {
       display.innerHTML = `
         <div class="intro-layout">
           <div class="intro-video">
