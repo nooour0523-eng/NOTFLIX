@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>카드 클릭 테스트</title>
+<style>
+  body { font-family: Arial, sans-serif; padding: 20px; }
+  .card-container {
+    display: flex;
+    gap: 10px;
+  }
+  .card {
+    width: 150px;
+    height: 90px;
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  }
+  #display {
+    margin-top: 30px;
+    padding: 15px;
+    border: 2px solid #333;
+    border-radius: 8px;
+    min-height: 150px;
+    transition: background-color 0.3s ease;
+  }
+</style>
+</head>
+<body>
+
+<div class="card-container">
+  <div class="card" 
+    data-title="첫 번째 카드" 
+    data-description="이것은 첫 번째 카드입니다." 
+    style="background-image: url('https://placekitten.com/200/120');"></div>
+
+  <div class="card" 
+    data-title="두 번째 카드" 
+    data-description="두 번째 카드 설명입니다." 
+    style="background-image: url('https://placekitten.com/201/120');"></div>
+
+  <div class="card" 
+    data-title="세 번째 카드" 
+    data-description="세 번째 카드의 내용이 여기에 표시됩니다." 
+    style="background-image: url('https://placekitten.com/202/120');"></div>
+</div>
+
+<div id="display">카드를 클릭하면 여기 소개가 나옵니다.</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const cards = document.querySelectorAll('.card');
+    const display = document.getElementById('display');
+
+    cards.forEach(card => {
+      card.addEventListener('click', () => {
+        const title = card.dataset.title;
+        const description = card.dataset.description;
+
+        display.innerHTML = `
+          <h2>${title}</h2>
+          <p>${description}</p>
+        `;
+        display.style.backgroundColor = '#f9f9f9';
+      });
+    });
+  });
+</script>
+
+</body>
+</html>

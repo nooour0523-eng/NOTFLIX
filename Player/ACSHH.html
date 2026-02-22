@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MyFlix Drama Episodes</title>
+<style>
+  body {
+    margin: 0; 
+    font-family: Arial, sans-serif;
+    background-color: #141414;
+    color: white;
+    display: flex;
+    height: 100vh;
+  }
+  /* 디스플레이 영역 (왼쪽) */
+  .display-area {
+    flex: 3;
+    padding: 20px;
+    background-color: #181818;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #333;
+    position: relative;
+  }
+  #btnBack {
+    background: transparent;
+    border: none;
+    color: #e50914;
+    font-weight: 700;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0 0 15px 0;
+    align-self: flex-start;
+  }
+  .display-video {
+    flex: 1;
+    background: black;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .display-video img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .display-info {
+    margin-top: 15px;
+  }
+  .display-info h2 {
+    margin: 0 0 8px 0;
+    font-size: 2rem;
+  }
+  .display-info p {
+    color: #ccc;
+    font-size: 1.1rem;
+    line-height: 1.4;
+  }
+  .btn-play {
+    margin-top: 20px;
+    background-color: #e50914;
+    border: none;
+    padding: 12px 28px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .btn-play:hover {
+    background-color: #f6121d;
+  }
+
+  /* 에피소드 리스트 (오른쪽) */
+  .episode-list {
+    flex: 1;
+    overflow-y: auto;
+    background-color: #111;
+    padding: 20px;
+  }
+  .episode-item {
+    cursor: pointer;
+    margin-bottom: 15px;
+    padding: 12px 10px;
+    border-radius: 6px;
+    background-color: #222;
+    transition: background-color 0.3s ease;
+  }
+  .episode-item:hover,
+  .episode-item.active {
+    background-color: #e50914;
+    color: white;
+  }
+  .episode-title {
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+  }
+  .episode-desc {
+    font-size: 0.9rem;
+    color: #bbb;
+  }
+</style>
+</head>
+<body>
+
+  <div class="display-area">
+    <button id="btnBack">← 돌아가기</button>
+    <div class="display-video">
+      <img src="https://placeimg.com/640/360/nature" alt="에피소드 미리보기" id="displayImage" />
+    </div>
+    <div class="display-info">
+      <h2 id="displayTitle">에피소드 제목</h2>
+      <p id="displayDescription">에피소드 설명이 여기에 표시됩니다.</p>
+      <button class="btn-play" id="btnPlay">▶ 재생</button>
+    </div>
+  </div>
+
+  <div class="episode-list" id="episodeList">
+    <!-- 에피소드 아이템들 -->
+  </div>
+
+<script>
+  const btnBack = document.getElementById('btnBack');
+  const displayImage = document.getElementById('displayImage');
+  const displayTitle = document.getElementById('displayTitle');
+  const displayDescription = document.getElementById('displayDescription');
+  const btnPlay = document.getElementById('btnPlay');
+  const episodeList = document.getElementById('episodeList');
+
+  btnBack.addEventListener('click', () => {
+    history.back();
+  });
+
+  // 에피소드 데이터 샘플
+  const episodes = [
+    {
+      title: "에피소드 1",
+      description: "개억까미친게임",
+      thumbnail: "/preview/VOD010.png",
+      video: "/video/VOD010.mp4"
+    },
+  ];
+
+  let currentEpisodeIndex = 0;
+
+  // 에피소드 리스트 생성
+  function renderEpisodeList() {
+    episodeList.innerHTML = '';
+    episodes.forEach((ep, idx) => {
+      const epDiv = document.createElement('div');
+      epDiv.classList.add('episode-item');
+      if(idx === currentEpisodeIndex) epDiv.classList.add('active');
+      epDiv.innerHTML = `
+        <div class="episode-title">${ep.title}</div>
+        <div class="episode-desc">${ep.description}</div>
+      `;
+      epDiv.addEventListener('click', () => {
+        selectEpisode(idx);
+      });
+      episodeList.appendChild(epDiv);
+    });
+  }
+
+  // 에피소드 선택 시 디스플레이 영역 업데이트
+  function selectEpisode(index) {
+    currentEpisodeIndex = index;
+    const ep = episodes[index];
+    displayImage.src = ep.thumbnail;
+    displayTitle.textContent = ep.title;
+    displayDescription.textContent = ep.description;
+    btnPlay.dataset.video = ep.video;
+
+    // 리스트에서 활성화 표시 변경
+    [...episodeList.children].forEach((child, idx) => {
+      child.classList.toggle('active', idx === index);
+    });
+  }
+
+  btnPlay.addEventListener('click', () => {
+    const videoUrl = btnPlay.dataset.video;
+    if (videoUrl) {
+      const playerUrl = `player.html?video=${encodeURIComponent(videoUrl)}`;
+      window.location.href = playerUrl;
+    } else {
+      alert('재생할 영상이 선택되지 않았습니다.');
+    }
+  });
+
+  // 초기 렌더링
+  renderEpisodeList();
+  selectEpisode(0);
+</script>
+
+</body>
+</html>
